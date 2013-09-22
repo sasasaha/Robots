@@ -33,16 +33,37 @@ void main (void)
   fscanf (F, "%i%i%i%i%i%i", &FldOneH, &FldOneW, &FldTwoH, &FldTwoW, &FldThreeH, &FldThreeW);
   printf ("1st: FldOneH: %i, FldOneW: %i, FldTwoH: %i, FldTwoW: %i, FldThreeH: %i, FldThreeW: %i \n", FldOneH, FldOneW, FldTwoH, FldTwoW, FldThreeH, FldThreeW);
 
-  if (FldOneH < FldOneW)
+  //positioning
+  if (FldOneH < FldOneW) 
     swap (&FldOneH, &FldOneW);
   if (FldTwoH < FldTwoW)
     swap (&FldTwoH, &FldTwoW);
   if (FldThreeH < FldThreeW)
     swap (&FldThreeH, &FldThreeW);
 
-  printf ("2nd: FldOneH: %i, FldOneW: %i, FldTwoH: %i, FldTwoW: %i, FldThreeH: %i, FldThreeW: %i \n\n", FldOneH, FldOneW, FldTwoH, FldTwoW, FldThreeH, FldThreeW);
+  printf ("2nd: FldOneH: %i, FldOneW: %i, FldTwoH: %i, FldTwoW: %i, FldThreeH: %i, FldThreeW: %i \n", FldOneH, FldOneW, FldTwoH, FldTwoW, FldThreeH, FldThreeW);
 
-  if (FldOneW >= FldTwoW) // first field + second field
+  //first has the biggest height, third - the smallest
+  if (FldOneH < FldTwoH)
+  {
+    swap (&FldOneH, &FldTwoH);
+	swap (&FldOneW, &FldTwoW);
+  }
+  if (FldOneH < FldThreeH)
+  {
+    swap (&FldOneH, &FldThreeH);
+	swap (&FldOneW, &FldThreeW);
+  }
+  if (FldThreeH > FldTwoH)
+  {
+    swap (&FldThreeH, &FldTwoH);
+	swap (&FldThreeW, &FldTwoW);
+  }
+
+  printf ("3rd: FldOneH: %i, FldOneW: %i, FldTwoH: %i, FldTwoW: %i, FldThreeH: %i, FldThreeW: %i \n\n", FldOneH, FldOneW, FldTwoH, FldTwoW, FldThreeH, FldThreeW);
+
+  // first field + second field
+  if (FldOneW >= FldTwoW) 
     if (FldOneH >= FldTwoH)
       S = FldOneH * FldOneW;
 	else 
