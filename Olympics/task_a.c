@@ -1,19 +1,5 @@
 #include <stdio.h>
 #include <conio.h>
-int min (int a, int b)
-{
-  if (a > b)
-	return b;
-  else
-	return a;
-}
-int max (int a, int b)
-{
-  if (a > b)
-	return a;
-  else
-	return b;
-}
 void swap (int *a, int *b)
 {
   int n;
@@ -64,13 +50,14 @@ void main (void)
   printf ("3rd: FldOneH: %i, FldOneW: %i, FldTwoH: %i, FldTwoW: %i, FldThreeH: %i, FldThreeW: %i \n\n", FldOneH, FldOneW, FldTwoH, FldTwoW, FldThreeH, FldThreeW);
 
   if ((FldTwoW - FldOneW) < 0)
-	  SumFldOTW = 0;
+    SumFldOTW = 0;
   else
-	  SumFldOTW = FldTwoW - FldOneW;
+	SumFldOTW = FldTwoW - FldOneW;
+
   if ((FldThreeW - FldTwoW) < 0)
-	  SumFldTTW = 0;
+	SumFldTTW = 0;
   else
-	  SumFldTTW = FldThreeW - FldTwoW;
+	SumFldTTW = FldThreeW - FldTwoW;
 
 
   S = FldOneH * FldOneW + FldTwoH * SumFldOTW + FldThreeH * SumFldTTW;
