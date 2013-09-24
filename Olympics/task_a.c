@@ -26,6 +26,7 @@ void main (void)
 {
   FILE *F;
   int FldOneH = 0, FldOneW = 0, FldTwoH = 0, FldTwoW = 0, FldThreeH = 0, FldThreeW = 0, S, n;
+  int SumFldOTW, SumFldTTW;
 
   if ((F = fopen ("Olympics.txt", "rb")) == NULL)
 	printf ("Error with reading file");
@@ -62,30 +63,17 @@ void main (void)
 
   printf ("3rd: FldOneH: %i, FldOneW: %i, FldTwoH: %i, FldTwoW: %i, FldThreeH: %i, FldThreeW: %i \n\n", FldOneH, FldOneW, FldTwoH, FldTwoW, FldThreeH, FldThreeW);
 
-  // first field + second field
-  if (FldOneW >= FldTwoW) 
-    if (FldOneH >= FldTwoH)
-      S = FldOneH * FldOneW;
-	else 
-	  S = FldOneH * FldOneW + (FldTwoH * FldTwoW - FldOneH * FldTwoW);
-  else 
-	if (FldOneH < FldTwoH)
-      S = FldTwoH * FldTwoW;
-    else 
-	  S = FldTwoH * FldTwoW + (FldOneH * FldOneW - FldTwoH * FldOneW); 
+  if ((FldTwoW - FldOneW) < 0)
+	  SumFldOTW = 0;
+  else
+	  SumFldOTW = FldTwoW - FldOneW;
+  if ((FldThreeW - FldTwoW) < 0)
+	  SumFldTTW = 0;
+  else
+	  SumFldTTW = FldThreeW - FldTwoW;
 
-  if (FldThreeH <= min (FldTwoH, FldOneH) && FldThreeH <= min (FldTwoW, FldOneW))
-  {
-	n = FldThreeH;
-    FldThreeH = FldOneW;
-	FldThreeW = n;
-  }
-  else if (FldThreeH <= max (FldTwoH, FldOneH) && FldThreeH <= max (FldTwoW, FldOneW))
-  {
-	n = FldThreeH;
-    FldThreeH = FldOneW;
-	FldThreeW = n;
-  }
+
+  S = FldOneH * FldOneW + FldTwoH * SumFldOTW + FldThreeH * SumFldTTW;
 
   
   printf ("Field min area: %i \n", S);
