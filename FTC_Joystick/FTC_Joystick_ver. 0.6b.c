@@ -22,12 +22,7 @@
 
 #include "JoystickDriver.c"
 
-task joy()
-{
-	getJoystickSettings(joystick);
-}
-
-task main()
+task move()
 {
 	static int speed = 50, m_speed = -50, slow_speed = 20, slow_m_speed = -20;
 
@@ -38,175 +33,239 @@ task main()
 
 	Flag_raise = 127;
 
-	StartTask(joy);
-
-
 	while (joy1Btn(10) != 1)
 		getJoystickSettings(joystick);
 
 
 	while(true)
 	{
-		while (joy1Btn (7)) /* turn left */
+		if (joy1Btn (7))
 		{
-	    Forward_L = speed;
-	    Backward_L = speed;
-	    Forward_R = speed;
-	    Backward_R = speed;
-		}
+			while (joy1Btn (7)) /* turn left */
+			{
+	    	Forward_L = speed;
+	    	Backward_L = speed;
+	    	Forward_R = speed;
+	    	Backward_R = speed;
+			}
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+		  while (Forward_L >= 0)
+	 	 	{
+	  		Forward_L -= 1;
+	  		Backward_L -= 1;
+	  		Forward_R -= 1;
+	  		Backward_R -= 1;
+	  	}
+	  }
 
-		while (joy1Btn (8)) /* turn right*/
+		if (joy1Btn (8))
 		{
-	    Forward_L = m_speed;
-	    Backward_L = m_speed;
-	    Forward_R = m_speed;
-	    Backward_R = m_speed;
-		}
+			while (joy1Btn (8)) /* turn right*/
+			{
+	    	Forward_L = m_speed;
+	    	Backward_L = m_speed;
+	    	Forward_R = m_speed;
+	    	Backward_R = m_speed;
+			}
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+      while (Forward_L <= 0)
+      {
+      	Forward_L += 1;
+	  		Backward_L += 1;
+	  		Forward_R += 1;
+	  		Backward_R += 1;
+	  	}
+	  }
 
-		while (joy1Btn (4)) /* move forward*/
-		{
-	    Forward_L = m_speed;
-	    Backward_L = m_speed;
-	    Forward_R = speed;
-	    Backward_R = speed;
+	  if (joy1Btn (4))
+	  {
+			while (joy1Btn (4)) /* move forward*/
+			{
+	    	Forward_L = m_speed;
+	    	Backward_L = m_speed;
+	    	Forward_R = speed;
+	    	Backward_R = speed;
+			}
 
-		}
+			while (Forward_L <= 0)
+			{
+				Forward_L += 1;
+	  		Backward_L += 1;
+	  		Forward_R -= 1;
+	  		Backward_R -= 1;
+	  	}
+	  }
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+	  if (joy1Btn (2))
+	  {
+			while (joy1Btn (2)) /* move backward */
+			{
+	    	Forward_L = speed;
+	    	Backward_L = speed;
+	    	Forward_R = m_speed;
+	    	Backward_R = m_speed;
+    	}
 
-		while (joy1Btn (2)) /* move backward */
-		{
-	    Forward_L = speed;
-	    Backward_L = speed;
-	    Forward_R = m_speed;
-	    Backward_R = m_speed;
-    }
+    	while (Forward_L >= 0)
+    	{
+    		Forward_L -= 1;
+	  		Backward_L -= 1;
+	  		Forward_R += 1;
+	  		Backward_R += 1;
+	  	}
+	  }
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+	  if (joy1Btn (1))
+	  {
+			while (joy1Btn (1)) /* move left */
+			{
+	   	  Forward_L = speed;
+	    	Backward_L = m_speed;
+	    	Forward_R = m_speed;
+	    	Backward_R = speed;
+			}
 
-		while (joy1Btn (1)) /* move left */
-		{
-	    Forward_L = speed;
-	    Backward_L = m_speed;
-	    Forward_R = m_speed;
-	    Backward_R = speed;
-		}
+			while (Forward_L >= 0)
+			{
+				Forward_L -= 1;
+	  		Backward_L += 1;
+	  		Forward_R += 1;
+	  		Backward_R -= 1;
+	  	}
+	  }
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+	  if (joy1Btn (3))
+	  {
+	  	while (joy1Btn (3)) /* move right */
+			{
+				Forward_L = m_speed;
+	    	Backward_L = speed;
+	    	Forward_R = speed;
+	    	Backward_R = m_speed;
+			}
 
-		while (joy1Btn (3)) /* move right */
-		{
-			Forward_L = m_speed;
-	    Backward_L = speed;
-	    Forward_R = speed;
-	    Backward_R = m_speed;
-		}
+			while (Forward_L <= 0)
+			{
+	  		Forward_L += 1;
+	  		Backward_L -= 1;
+	  		Forward_R -= 1;
+	  		Backward_R += 1;
+	  	}
+	  }
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+	  if (joystick.joy1_TopHat == 0)
+	  {
+			while (joystick.joy1_TopHat == 0) /* slow move forward */
+			{
+	    	Forward_L = slow_m_speed;
+	    	Backward_L = slow_m_speed;
+	    	Forward_R = slow_speed;
+	    	Backward_R = slow_speed;
+			}
 
-		while (joystick.joy1_TopHat == 0) /* slow move forward */
-		{
-	    Forward_L = slow_m_speed;
-	    Backward_L = slow_m_speed;
-	    Forward_R = slow_speed;
-	    Backward_R = slow_speed;
+			while (Forward_L <= 0)
+			{
+				Forward_L += 1;
+	  		Backward_L += 1;
+	  		Forward_R -= 1;
+	  		Backward_R -= 1;
+	  	}
+	  }
 
-		}
+	  if (joystick.joy1_TopHat == 4)
+	  {
+	  	while (joystick.joy1_TopHat == 4) /* slow move backward */
+			{
+	    	Forward_L = slow_speed;
+	    	Backward_L = slow_speed;
+	    	Forward_R = slow_m_speed;
+	    	Backward_R = slow_m_speed;
+			}
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+			while (Forward_L >= 0)
+			{
+				Forward_L -= 1;
+	  		Backward_L -= 1;
+	  		Forward_R += 1;
+	  		Backward_R += 1;
+	  	}
+	  }
 
-		while (joystick.joy1_TopHat == 4) /* slow move backward */
-		{
-	    Forward_L = slow_speed;
-	    Backward_L = slow_speed;
-	    Forward_R = slow_m_speed;
-	    Backward_R = slow_m_speed;
+	  if (joystick.joy1_TopHat == 6)
+	  {
+			while (joystick.joy1_TopHat == 6) /* slow move left */
+			{
+      	Forward_L = slow_speed;
+	    	Backward_L = slow_m_speed;
+	    	Forward_R = slow_m_speed;
+	    	Backward_R = slow_speed;
+			}
 
-		}
+			while (Forward_L >= 0)
+			{
+				Forward_L -= 1;
+	  		Backward_L += 1;
+	  		Forward_R += 1;
+	  		Backward_R -= 1;
+	  	}
+	  }
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+	  if (joystick.joy1_TopHat == 2)
+	  {
+			while (joystick.joy1_TopHat == 2) /* slow move right */
+			{
+      	Forward_L = slow_m_speed;
+	  		Backward_L = slow_speed;
+	    	Forward_R = slow_speed;
+	    	Backward_R = slow_m_speed;
+			}
 
-		while (joystick.joy1_TopHat == 6) /* slow move left */
-		{
-      Forward_L = slow_speed;
-	    Backward_L = slow_m_speed;
-	    Forward_R = slow_m_speed;
-	    Backward_R = slow_speed;
-		}
+			while (Forward_L <= 0)
+			{
+				Forward_L += 1;
+	  		Backward_L -= 1;
+	  		Forward_R -= 1;
+	  		Backward_R += 1;
+	  	}
+	  }
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+	  if (joy1Btn (6))
+	  {
+			while (joy1Btn (6)) /* slow turn right*/
+			{
+      	Forward_L = slow_m_speed;
+	    	Backward_L = slow_m_speed;
+	    	Forward_R = slow_m_speed;
+	    	Backward_R = slow_m_speed;
+			}
 
-		while (joystick.joy1_TopHat == 2) /* slow move right */
-		{
-      Forward_L = slow_m_speed;
-	    Backward_L = slow_speed;
-	    Forward_R = slow_speed;
-	    Backward_R = slow_m_speed;
-		}
+			while (Forward_L <= 0)
+			{
+				Forward_L += 1;
+	  		Backward_L += 1;
+	  		Forward_R += 1;
+	  		Backward_R += 1;
+	  	}
+	  }
 
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+	  if (joy1Btn (5))
+	  {
+			while (joy1Btn (5)) /* slow turn left */
+			{
+      	Forward_L = slow_speed;
+	    	Backward_L = slow_speed;
+	    	Forward_R = slow_speed;
+	    	Backward_R = slow_speed;
+			}
 
-		while (joy1Btn (6)) /* slow turn right*/
-		{
-      Forward_L = slow_m_speed;
-	    Backward_L = slow_m_speed;
-	    Forward_R = slow_m_speed;
-	    Backward_R = slow_m_speed;
-		}
-
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
-
-		while (joy1Btn (5)) /* slow turn left */
-		{
-			getJoystickSettings(joystick);
-
-      Forward_L = slow_speed;
-	    Backward_L = slow_speed;
-	    Forward_R = slow_speed;
-	    Backward_R = slow_speed;
-		}
-
-	  Forward_L = 0;
-	  Backward_L = 0;
-	  Forward_R = 0;
-	  Backward_R = 0;
+			while (Forward_L >= 0)
+			{
+				Forward_L -= 1;
+	  		Backward_L -= 1;
+	  		Forward_R -= 1;
+	  		Backward_R -= 1;
+	  	}
+	  }
 
 		while (joy1Btn (9))
 		{
@@ -219,4 +278,17 @@ task main()
 	Backward_R = 0;
 	Flag_raise = 127;
 	}
+}
+
+task capture ()
+{
+}
+
+task main ()
+{
+	StartTask(move);
+	StartTask(capture);
+
+	while (true)
+		getJoystickSettings(joystick);
 }
