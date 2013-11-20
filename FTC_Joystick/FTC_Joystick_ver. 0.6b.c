@@ -18,7 +18,7 @@
 #define Forward_R motor[motorH]
 #define Backward_L motor[motorF]
 #define Backward_R motor[motorI]
-#define Flag_raise servo[servo1]
+#define Flag_Raise servo[servo1]
 
 #include "JoystickDriver.c"
 
@@ -31,10 +31,10 @@ task move()
 	Forward_R = 0;
 	Backward_R = 0;
 
-	Flag_raise = 127;
+	Flag_Raise = 127;
 
 	while (joy1Btn(10) != 1)
-		getJoystickSettings(joystick);
+	getJoystickSettings(joystick);
 
 
 	while(true)
@@ -56,6 +56,13 @@ task move()
 	  		Forward_R -= 1;
 	  		Backward_R -= 1;
 	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
+	  	}
 	  }
 
 		if (joy1Btn (8))
@@ -74,6 +81,13 @@ task move()
 	  		Backward_L += 1;
 	  		Forward_R += 1;
 	  		Backward_R += 1;
+	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
 	  	}
 	  }
 
@@ -94,6 +108,13 @@ task move()
 	  		Forward_R -= 1;
 	  		Backward_R -= 1;
 	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
+	  	}
 	  }
 
 	  if (joy1Btn (2))
@@ -112,6 +133,13 @@ task move()
 	  		Backward_L -= 1;
 	  		Forward_R += 1;
 	  		Backward_R += 1;
+	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
 	  	}
 	  }
 
@@ -132,6 +160,13 @@ task move()
 	  		Forward_R += 1;
 	  		Backward_R -= 1;
 	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
+	  	}
 	  }
 
 	  if (joy1Btn (3))
@@ -150,6 +185,13 @@ task move()
 	  		Backward_L -= 1;
 	  		Forward_R -= 1;
 	  		Backward_R += 1;
+	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
 	  	}
 	  }
 
@@ -170,6 +212,13 @@ task move()
 	  		Forward_R -= 1;
 	  		Backward_R -= 1;
 	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
+	  	}
 	  }
 
 	  if (joystick.joy1_TopHat == 4)
@@ -188,6 +237,13 @@ task move()
 	  		Backward_L -= 1;
 	  		Forward_R += 1;
 	  		Backward_R += 1;
+	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
 	  	}
 	  }
 
@@ -208,6 +264,13 @@ task move()
 	  		Forward_R += 1;
 	  		Backward_R -= 1;
 	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
+	  	}
 	  }
 
 	  if (joystick.joy1_TopHat == 2)
@@ -226,6 +289,13 @@ task move()
 	  		Backward_L -= 1;
 	  		Forward_R -= 1;
 	  		Backward_R += 1;
+	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
 	  	}
 	  }
 
@@ -246,6 +316,13 @@ task move()
 	  		Forward_R += 1;
 	  		Backward_R += 1;
 	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
+	  	}
 	  }
 
 	  if (joy1Btn (5))
@@ -265,18 +342,25 @@ task move()
 	  		Forward_R -= 1;
 	  		Backward_R -= 1;
 	  	}
+	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	  	{
+	  		Forward_L = 0;
+	  		Backward_L = 0;
+	  		Forward_R = 0;
+	  		Backward_R = 0;
+	  	}
 	  }
 
 		while (joy1Btn (9))
 		{
-			servo[servo1] = 0; /* 0 - Full Power/ Speed Reverse; 127 - Stop; 256 - Full Power/ Speed Forward */
+			Flag_Raise = 0; /* 0 - Full Power/ Speed Reverse; 127 - Stop; 256 - Full Power/ Speed Forward */
 		}
 
 	Forward_L = 0;
 	Backward_L = 0;
 	Forward_R = 0;
 	Backward_R = 0;
-	Flag_raise = 127;
+	Flag_Raise = 127;
 	}
 }
 
