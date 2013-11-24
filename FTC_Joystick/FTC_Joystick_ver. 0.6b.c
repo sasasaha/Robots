@@ -6,8 +6,8 @@
 #pragma config(Motor,  mtr_S1_C2_2,     motorG,        tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_1,     motorH,        tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_2,     motorI,        tmotorTetrix, openLoop)
-#pragma config(Servo,  srvo_S1_C4_1,    servo1,               tServoNone)
-#pragma config(Servo,  srvo_S1_C4_2,    servo2,               tServoNone)
+#pragma config(Servo,  srvo_S1_C4_1,    servo1,               tServoContinuousRotation)
+#pragma config(Servo,  srvo_S1_C4_2,    servo2,               tServoStandard)
 #pragma config(Servo,  srvo_S1_C4_3,    servo3,               tServoNone)
 #pragma config(Servo,  srvo_S1_C4_4,    servo4,               tServoNone)
 #pragma config(Servo,  srvo_S1_C4_5,    servo5,               tServoNone)
@@ -19,6 +19,10 @@
 #define Backward_L motor[motorF]
 #define Backward_R motor[motorI]
 #define Flag_Raise servo[servo1]
+#define Capture_Raise_1 motor[motorD]
+#define Capture_Raise_2 motor[motorE]
+#define Capture_Control servo[servo2]
+
 
 #include "JoystickDriver.c"
 
@@ -39,57 +43,57 @@ task move()
 
 	while(true)
 	{
-		if (joy1Btn (7))
-		{
-			while (joy1Btn (7)) /* turn left */
-			{
-	    	Forward_L = speed;
-	    	Backward_L = speed;
-	    	Forward_R = speed;
-	    	Backward_R = speed;
-			}
+		//if (joy1Btn (7))
+		//{
+		//	while (joy1Btn (7)) /* turn left */
+		//	{
+	 //   	Forward_L = speed;
+	 //   	Backward_L = speed;
+	 //   	Forward_R = speed;
+	 //   	Backward_R = speed;
+		//	}
 
-		  while (Forward_L >= 0)
-	 	 	{
-	  		Forward_L -= 1;
-	  		Backward_L -= 1;
-	  		Forward_R -= 1;
-	  		Backward_R -= 1;
-	  	}
-	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
-	  	{
-	  		Forward_L = 0;
-	  		Backward_L = 0;
-	  		Forward_R = 0;
-	  		Backward_R = 0;
-	  	}
-	  }
+		//  while (Forward_L >= 0)
+	 //	 	{
+	 // 		Forward_L -= 1;
+	 // 		Backward_L -= 1;
+	 // 		Forward_R -= 1;
+	 // 		Backward_R -= 1;
+	 // 	}
+	 // 	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	 // 	{
+	 // 		Forward_L = 0;
+	 // 		Backward_L = 0;
+	 // 		Forward_R = 0;
+	 // 		Backward_R = 0;
+	 // 	}
+	 // }
 
-		if (joy1Btn (8))
-		{
-			while (joy1Btn (8)) /* turn right*/
-			{
-	    	Forward_L = m_speed;
-	    	Backward_L = m_speed;
-	    	Forward_R = m_speed;
-	    	Backward_R = m_speed;
-			}
+		//if (joy1Btn (8))
+		//{
+		//	while (joy1Btn (8)) /* turn right*/
+		//	{
+	 //   	Forward_L = m_speed;
+	 //   	Backward_L = m_speed;
+	 //   	Forward_R = m_speed;
+	 //   	Backward_R = m_speed;
+		//	}
 
-      while (Forward_L <= 0)
-      {
-      	Forward_L += 1;
-	  		Backward_L += 1;
-	  		Forward_R += 1;
-	  		Backward_R += 1;
-	  	}
-	  	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
-	  	{
-	  		Forward_L = 0;
-	  		Backward_L = 0;
-	  		Forward_R = 0;
-	  		Backward_R = 0;
-	  	}
-	  }
+  //    while (Forward_L <= 0)
+  //    {
+  //    	Forward_L += 1;
+	 // 		Backward_L += 1;
+	 // 		Forward_R += 1;
+	 // 		Backward_R += 1;
+	 // 	}
+	 // 	if (Forward_L != 0 || Forward_R != 0 || Backward_L != 0 || Backward_R != 0)
+	 // 	{
+	 // 		Forward_L = 0;
+	 // 		Backward_L = 0;
+	 // 		Forward_R = 0;
+	 // 		Backward_R = 0;
+	 // 	}
+	 // }
 
 	  if (joy1Btn (4))
 	  {
@@ -366,12 +370,38 @@ task move()
 
 task capture ()
 {
+	Capture_Control = 255;
+
+  while (true)
+  {
+	  while (joy2Btn (2))
+	  {
+		  Capture_Raise_1 = 100;
+		  Capture_Raise_2 = 100;
+	  }
+
+	  while (joy2Btn (4))
+	  {
+		  Capture_Raise_1 = -100;
+		  Capture_Raise_2 = -100;
+	  }
+
+    while (joy1Btn (7))
+		  Capture_Control = 255;
+
+ 	  while (joy1Btn (8))
+		  Capture_Control = 135;
+
+	  Capture_Raise_1 = 0;
+	  Capture_Raise_2 = 0;
+	  Capture_Control = 255;
+	}
 }
 
 task main ()
 {
-	StartTask(move);
-	StartTask(capture);
+	StartTask(move, 9);
+	StartTask(capture, 10);
 
 	while (true)
 		getJoystickSettings(joystick);
